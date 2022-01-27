@@ -181,19 +181,19 @@ function App() {
           </TabList>
         </Tabs>
       </div>
-      {/* <Modal isOpen={openModal} onRequestClose={() => setOpenModal(false)} style={customStyles}  > */}
+      <Modal isOpen={openModal} onRequestClose={() => setOpenModal(false)} style={customStyles}  >
 
-      <DatePicker selected={stateCal} onChange={handleOnChange} />
+        <DatePicker selected={stateCal} onChange={handleOnChange} />
 
 
-      {/* <DateRange
+        {/* <DateRange
           onChange={handleOnChange}
           months={1}
           ranges={stateCal}
           direction="vertical"
         /> */}
-      <Button variant="contained" onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Done</Button>
-      {/* </Modal> */}
+        <Button variant="contained" onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Done</Button>
+      </Modal>
       <ReactECharts option={option} />
     </div >
   )
