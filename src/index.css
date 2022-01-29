@@ -76,3 +76,12 @@ code {
   box-shadow: rgb(239 242 245) 0px 1px 0px;
   font-weight: 600;
 }
+
+.rowTitle {
+  display: flex;
+  align-items: center;
+}
+.rowTitle b {
+  margin-left: auto;
+  padding-left: 15px;
+}
