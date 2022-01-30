@@ -121,6 +121,13 @@ code {
   color: rgba(0, 0, 0, 0.5);
 }
 
+[data-status=true] {
+  background: rgb(255, 255, 255);
+  color: rgb(23, 25, 36);
+  box-shadow: rgb(239 242 245) 0 1px 0;
+  font-weight: 600;
+}
+
 @media screen and (max-width: 768px) {
   .rdrDefinedRangesWrapper {
     display: none;

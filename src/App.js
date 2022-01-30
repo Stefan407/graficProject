@@ -19,6 +19,7 @@ function App() {
   const [dataOrigin, setDataOrigin] = useState({});
   const [dateFilterStart, setDateFilterStart] = useState(null);
   const [dateFilterEnd, setDateFilterEnd] = useState(null);
+  const [logStatus, setLogStatus] = useState(false);
   const [tabIndex, setTabIndex] = useState(6);
   const [openModal, setOpenModal] = useState(false);
   const [stateCal, setStateCal] = useState([
@@ -58,14 +59,16 @@ function App() {
         return array.slice(Math.max(array.length - 1095, 1))
       case 6:
         return array
-      case 7:
-        return array
       case 8:
         return array.slice().filter(item =>
             (dateFilterEnd ? moment().diff(dateFilterEnd) <= moment().diff(item.date) : item.date) && (dateFilterStart ? moment().diff(dateFilterStart) >= moment().diff(item.date) : item.date)
         )
 
     }
+  }
+
+  function handleClick() {
+    setLogStatus(!logStatus)
   }
 
   function numFormatter(value) {
@@ -200,7 +203,7 @@ function App() {
         yAxisIndex: 1,
         showSymbol: false,
         data: reverceArrayFun(dataOrigin.btc_currency).map(itemI => {
-          return Number(tabIndex === 7 ? Math.log10(itemI.value) : itemI.value)
+          return Number(logStatus ? Math.log10(itemI.value) : itemI.value)
         }),
       }
     ]
@@ -227,14 +230,21 @@ function App() {
     setStateCal([selection]);
   };
 
-  console.log(stateCal);
+  let tabLog;
+  if(logStatus) {
+    tabLog = <Tab onClick={handleClick} data-status={true}>LOG</Tab>;
+  } else {
+    tabLog = <Tab onClick={handleClick} data-status={false}>LOG</Tab>;
+  }
 
   return (
       <div className='containerCal'>
         <div className='wrapFilters'>
           <Tabs selectedIndex={tabIndex} onSelect={
             index => {
-              if (index !== 8) {
+              if(index === 7) {
+
+              } else if (index !== 8) {
                 setTabIndex(index)
               } else {
                 setTabIndex(index);
@@ -250,7 +260,7 @@ function App() {
               <Tab>2Y</Tab>
               <Tab>3Y</Tab>
               <Tab>All</Tab>
-              <Tab>LOG</Tab>
+              {tabLog}
               <Tab>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="20px" width="20px" viewBox="0 0 24 24"  >
                   <path fillRule="evenodd" clipRule="evenodd" d="M15 5H9V4C9 3.44772 8.55228 3 8 3C7.44772 3 7 3.44772 7 4V5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H17V4C17 3.44772 16.5523 3 16 3C15.4477 3 15 3.44772 15 4V5ZM6 7C5.44772 7 5 7.44771 5 8V10H19V8C19 7.44772 18.5523 7 18 7H17C17 7.55228 16.5523 8 16 8C15.4477 8 15 7.55228 15 7H9C9 7.55228 8.55228 8 8 8C7.44772 8 7 7.55228 7 7H6ZM19 12H5V18C5 18.5523 5.44772 19 6 19H18C18.5523 19 19 18.5523 19 18V12Z"></path>
@@ -274,7 +284,7 @@ function App() {
             <Button variant="text" className='can' onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Cancel</Button>
             <div className='flex-end'>
               <div className='text'><span>Selected:</span>
-                {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1} {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1 === 1 ? 'day' : 'days'}
+                {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1 ? moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1 : "0"} {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1 === 1 ? 'day' : 'days'}
               </div>
               <Button variant="contained" onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Done</Button>
             </div>
