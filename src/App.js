@@ -11,6 +11,8 @@ import "react-date-range/dist/theme/default.css";
 import DatePicker from "react-datepicker";
 import { addDays, subDays } from "date-fns";
 import moment from 'moment'
+// import { DateRangePicker } from "react-date-range";
+import { DateRangePicker } from "react-date-range";
 
 
 function App() {
@@ -101,9 +103,7 @@ function App() {
               $value = dataOrigin.btc_currency[$item.dataIndex].value;
             break;
           }
-          if($key === 0) {
 
-          }
           $title = '<div>' + $item.name + '</div>';
           $template += '<div class="rowTitle">';
           $template += $item.marker;
@@ -135,7 +135,10 @@ function App() {
         },
         magicType: {
           show: false,
-          type: ['line', 'bar']
+          type: [
+            'line',
+            'bar'
+          ]
         },
         restore: {
           show: false
@@ -180,7 +183,7 @@ function App() {
         type: 'bar',
         stack: 'one',
         data: dataOrigin?.btc_liquidation_short ? reverceArrayFun(dataOrigin.btc_liquidation_short).map(itemI => {
-          return tabIndex === 7 ? -Math.log10(itemI.value) : -itemI.value
+          return -itemI.value
         }) : [],
       },
       {
@@ -188,7 +191,7 @@ function App() {
         type: 'bar',
         stack: 'one',
         data: dataOrigin?.btc_liquidation_long ? reverceArrayFun(dataOrigin.btc_liquidation_long).map(itemI => {
-          return tabIndex === 7 ? Math.log10(itemI.value) : itemI.value
+          return itemI.value
         }) : [],
       },
       {
@@ -196,9 +199,9 @@ function App() {
         type: 'line',
         yAxisIndex: 1,
         showSymbol: false,
-        data: dataOrigin?.btc_currency ? reverceArrayFun(dataOrigin.btc_currency).map(itemI => {
+        data: reverceArrayFun(dataOrigin.btc_currency).map(itemI => {
           return Number(tabIndex === 7 ? Math.log10(itemI.value) : itemI.value)
-        }) : [],
+        }),
       }
     ]
   };
@@ -223,6 +226,8 @@ function App() {
     setDateFilterEnd(selection.endDate)
     setStateCal([selection]);
   };
+
+  console.log(stateCal);
 
   return (
       <div className='containerCal'>
@@ -256,16 +261,24 @@ function App() {
         </div>
         <Modal isOpen={openModal} onRequestClose={() => setOpenModal(false)} style={customStyles}  >
 
-          <DatePicker selected={stateCal} onChange={handleOnChange} />
+          {/* <DatePicker selected={stateCal} onChange={handleOnChange} /> */}
 
 
-          {/* <DateRange
-          onChange={handleOnChange}
-          months={1}
-          ranges={stateCal}
-          direction="vertical"
-        /> */}
-          <Button variant="contained" onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Done</Button>
+          <DateRangePicker
+              onChange={handleOnChange}
+              months={1}
+              ranges={stateCal}
+              direction="vertical"
+          />
+          <div className='flex'>
+            <Button variant="text" className='can' onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Cancel</Button>
+            <div className='flex-end'>
+              <div className='text'><span>Selected:</span>
+                {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1} {moment(dateFilterEnd).diff(moment(dateFilterStart), 'days') + 1 === 1 ? 'day' : 'days'}
+              </div>
+              <Button variant="contained" onClick={() => { setOpenModal(false); setDataOrigin(dataOrigin) }}>Done</Button>
+            </div>
+          </div>
         </Modal>
         <ReactECharts option={option} />
       </div >

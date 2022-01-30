@@ -36,7 +36,7 @@ code {
   background: rgb(239, 242, 245);
   padding: 3px;
   border-radius: 8px;
-  margin: 0px;
+  margin: 0;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -48,14 +48,14 @@ code {
   border-left: 1px solid transparent;
   border-image: initial;
   border-bottom: none;
-  bottom: 0px;
+  bottom: 0;
   position: relative;
   list-style: none;
   cursor: pointer;
   border-radius: 8px;
   font-weight: 600;
   display: flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: center;
@@ -73,7 +73,7 @@ code {
 .react-tabs__tab--selected {
   background: rgb(255, 255, 255);
   color: rgb(23, 25, 36);
-  box-shadow: rgb(239 242 245) 0px 1px 0px;
+  box-shadow: rgb(239 242 245) 0 1px 0;
   font-weight: 600;
 }
 
@@ -84,4 +84,45 @@ code {
 .rowTitle b {
   margin-left: auto;
   padding-left: 15px;
+}
+
+.react-tabs__tab .react-datepicker__input-container input {
+  border: 1px solid transparent;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.rdrInputRanges {
+  display: none;
+}
+
+.can {
+  color: #000 !important;
+}
+
+.flex .text {
+  font-size: 12px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.flex .text span {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  .rdrDefinedRangesWrapper {
+    display: none;
+  }
 }
